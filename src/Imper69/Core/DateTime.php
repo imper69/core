@@ -3,6 +3,8 @@
  * Copyright: IMPER.INFO Adrian Szuszkiewicz
  * Date: 22.06.17
  * Time: 15:47
+ *
+ * testowy update :>
  */
 
 namespace Imper69\Core;
