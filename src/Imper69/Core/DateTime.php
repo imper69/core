@@ -10,12 +10,23 @@
 namespace Imper69\Core;
 
 
+use DateTimeZone;
+
 class DateTime extends \DateTime
 {
     const KNOWN_FORMATS = [
         'Y-m-d',
         'd-m-Y',
     ];
+
+    public function __construct($time = 'now', DateTimeZone $timezone = null)
+    {
+        if (substr($time, 0, 1) == '@') {
+            $time = date('Y-m-d H:i:s', substr($time, 1));
+        }
+
+        parent::__construct($time, $timezone);
+    }
 
     public function formatPL(string $format = 'Y-m-d H:i:s')
     {
