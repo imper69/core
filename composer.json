@@ -15,6 +15,6 @@
     },
     "require-dev": {},
     "autoload": {
-        "psr-4": { "Imper69\\Core\\": "src/Imper69/Core" }
+        "psr-4": { "Imper86\\Core\\": "src/Imper86/Core" }
     }
 }

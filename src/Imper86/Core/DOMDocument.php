@@ -5,7 +5,7 @@
  * Time: 15:48
  */
 
-namespace Imper69\Core;
+namespace Imper86\Core;
 
 
 class DOMDocument extends \DOMDocument

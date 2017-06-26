@@ -7,7 +7,7 @@
  * testowy update :>
  */
 
-namespace Imper69\Core;
+namespace Imper86\Core;
 
 
 use DateTimeZone;
