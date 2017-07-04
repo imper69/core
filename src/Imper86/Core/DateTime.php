@@ -28,6 +28,11 @@ class DateTime extends \DateTime
         parent::__construct($time, $timezone);
     }
 
+    public function __toString()
+    {
+        return $this->format();
+    }
+
     public function formatPL(string $format = 'Y-m-d H:i:s')
     {
         $oldFormat = $format;
