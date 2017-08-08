@@ -22,7 +22,12 @@ class DateTime extends \DateTime
     public function __construct($time = 'now', DateTimeZone $timezone = null)
     {
         if (substr($time, 0, 1) == '@') {
-            $time = date('Y-m-d H:i:s', (int)substr($time, 1));
+            $unixTimeStamp = substr($time, 1);
+            if (!empty($unixTimeStamp)) {
+                $time = date('Y-m-d H:i:s', substr($time, 1));
+            } else {
+                $time = date('Y-m-d H:i:s', 0);
+            }
         }
 
         parent::__construct($time, $timezone);
