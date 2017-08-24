@@ -14,9 +14,29 @@ use DateTimeZone;
 
 class DateTime extends \DateTime
 {
+    /**
+     * @var StringConverter
+     */
+    private $stringConverter;
+
     const KNOWN_FORMATS = [
         'Y-m-d',
         'd-m-Y',
+    ];
+
+    const PL_MONTHS = [
+        'styczeń' => 'january',
+        'luty' => 'february',
+        'marzec' => 'march',
+        'kwiecień' => 'april',
+        'maj' => 'may',
+        'czerwiec' => 'june',
+        'lipiec' => 'july',
+        'sierpień' => 'august',
+        'wrzesień' => 'september',
+        'październik' => 'october',
+        'listopad' => 'november',
+        'grudzień' => 'december',
     ];
 
     public function __construct($time = 'now', DateTimeZone $timezone = null)
@@ -29,6 +49,8 @@ class DateTime extends \DateTime
                 $time = date('Y-m-d H:i:s', 0);
             }
         }
+
+        $time = $this->convertPLMonths($time);
 
         parent::__construct($time, $timezone);
     }
@@ -58,5 +80,28 @@ class DateTime extends \DateTime
     public function format($format = 'Y-m-d')
     {
         return parent::format($format);
+    }
+
+    private function convertPLMonths(string $dateString): string
+    {
+        $converter = $this->getStringConverter();
+
+        foreach (self::PL_MONTHS as $plMonthName => $enMonthName) {
+            $dateString = str_replace($plMonthName, $enMonthName, $dateString);
+            $dateString = str_replace(substr($plMonthName, 0, 3), $enMonthName, $dateString);
+            $dateString = str_replace($converter->removePolishCharacters($plMonthName), $enMonthName, $dateString);
+            $dateString = str_replace(substr($converter->removePolishCharacters($plMonthName), 0, 3), $enMonthName, $dateString);
+        }
+
+        return $dateString;
+    }
+
+    private function getStringConverter(): StringConverter
+    {
+        if (null === $this->stringConverter) {
+            $this->stringConverter = new StringConverter();
+        }
+
+        return $this->stringConverter;
     }
 }
