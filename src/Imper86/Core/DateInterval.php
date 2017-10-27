@@ -23,4 +23,25 @@ class DateInterval extends \DateInterval
             $this->{$key} = $value;
         }
     }
+
+    public function toSeconds(): int
+    {
+        $from = new \DateTime();
+        $to = clone $from;
+        $to->add($this);
+
+        $seconds = $to->getTimestamp() - $from->getTimestamp();
+
+        return $seconds;
+    }
+
+    public function toMinutes(): float
+    {
+        return $this->toSeconds()/60;
+    }
+
+    public function toHours(): float
+    {
+        return $this->toSeconds()/60/60;
+    }
 }
