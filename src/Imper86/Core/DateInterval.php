@@ -12,7 +12,11 @@ class DateInterval extends \DateInterval
 {
     public function __construct($interval_spec)
     {
-        parent::__construct($interval_spec);
+        if ($interval_spec instanceof \DateInterval) {
+            parent::__construct($interval_spec->format('P%yY%mM%dDT%hH%iM%sS'));
+        } else {
+            parent::__construct($interval_spec);
+        }
 
         $from = new \DateTime();
         $to = clone $from;
