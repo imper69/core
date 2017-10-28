@@ -14,6 +14,7 @@ class DateInterval extends \DateInterval
     {
         if ($interval_spec instanceof \DateInterval) {
             parent::__construct($interval_spec->format('P%yY%mM%dDT%hH%iM%sS'));
+            $this->invert = $interval_spec->invert;
         } else {
             parent::__construct($interval_spec);
         }
