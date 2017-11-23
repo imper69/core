@@ -39,6 +39,16 @@ class DateTime extends \DateTime
         'grudzień' => 'december',
     ];
 
+    const PL_DAYS = [
+        1 => 'poniedziałek',
+        2 => 'wtorek',
+        3 => 'środa',
+        4 => 'czwartek',
+        5 => 'piątek',
+        6 => 'sobota',
+        7 => 'niedziela',
+    ];
+
     public function __construct($time = 'now', DateTimeZone $timezone = null)
     {
         if (substr($time, 0, 1) == '@') {
@@ -82,7 +92,7 @@ class DateTime extends \DateTime
         return parent::format($format);
     }
 
-    public function addOmitingDaysOff(\DateInterval $interval)
+    public function addOmitingDaysOff(\DateInterval $interval): void
     {
         $dateFrom = clone $this;
         $this->add($interval);
@@ -98,6 +108,11 @@ class DateTime extends \DateTime
         ) {
             $this->add($oneDayInterval);
         }
+    }
+
+    public function getPlDayOfWeek(): string
+    {
+        return self::PL_DAYS[$this->format('N')];
     }
 
     private function convertPLMonths(string $dateString): string
