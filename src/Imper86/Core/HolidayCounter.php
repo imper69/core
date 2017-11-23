@@ -55,11 +55,15 @@ class HolidayCounter
         $this->dateTo = $dateTo;
     }
 
-    public function getNumberOfFreeDays(): int
+    public function getNumberOfFreeDays(bool $countLastDay = true): int
     {
         $interval = new \DateInterval('P1D');
         $dateTo = clone $this->dateTo;
-        $dateTo->add($interval);
+
+        if ($countLastDay) {
+            $dateTo->add($interval);
+        }
+
         $periods = new \DatePeriod($this->dateFrom, $interval, $dateTo);
 
         $days = 0;
@@ -79,11 +83,15 @@ class HolidayCounter
         return $days;
     }
 
-    public function getNumberOfWorkingDays(): int
+    public function getNumberOfWorkingDays(bool $countLastDay = true): int
     {
         $interval = new \DateInterval('P1D');
         $dateTo = clone $this->dateTo;
-        $dateTo->add($interval);
+
+        if ($countLastDay) {
+            $dateTo->add($interval);
+        }
+
         $periods = new \DatePeriod($this->dateFrom, $interval, $dateTo);
 
         $days = 0;

@@ -82,6 +82,24 @@ class DateTime extends \DateTime
         return parent::format($format);
     }
 
+    public function addOmitingDaysOff(\DateInterval $interval)
+    {
+        $dateFrom = clone $this;
+        $this->add($interval);
+
+        $holidayCounter = new HolidayCounter($dateFrom, $this);
+        $this->add(new \DateInterval("P{$holidayCounter->getNumberOfFreeDays(false)}D"));
+
+        $oneDayInterval = new \DateInterval('P1D');
+
+        while (
+            !in_array($this->format('N'), HolidayCounter::WORKING_DAYS)
+            || in_array($this->format('Y-m-d'), HolidayCounter::HOLIDAYS)
+        ) {
+            $this->add($oneDayInterval);
+        }
+    }
+
     private function convertPLMonths(string $dateString): string
     {
         $converter = $this->getStringConverter();
